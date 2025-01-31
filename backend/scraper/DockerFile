@@ -1,0 +1,35 @@
+# Use the official Node.js image for the frontend
+FROM node:18-alpine as frontend
+
+# Set the working directory for frontend
+WORKDIR /app/frontend
+
+# Copy package.json and install frontend dependencies
+COPY frontend/package*.json ./
+RUN npm install
+
+# Build the Next.js frontend
+COPY frontend ./
+RUN npm run build
+
+# Use the official Python image for the backend
+FROM python:3.10-slim as backend
+
+# Set the working directory for backend
+WORKDIR /app/backend
+
+# Install Python dependencies
+COPY backend/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy backend files
+COPY backend ./
+
+# Expose the ports for frontend and backend
+EXPOSE 3000 8000
+
+# Copy the built frontend from the first stage
+COPY --from=frontend /app/frontend/.next /app/frontend/.next
+
+# Command to run the application
+CMD ["bash", "-c", "python manage.py runserver 0.0.0.0:8000 & npm run start --prefix /app/frontend"]
