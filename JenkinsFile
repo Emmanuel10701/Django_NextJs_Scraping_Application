@@ -1,0 +1,75 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER_IMAGE = 'yourdockerusername/django-nextjs-app'  // Replace with your Docker Hub username
+        REGISTRY = 'docker.io'
+        TAG = "${env.BUILD_ID}"
+        REPO = 'https://github.com/Emmanuel10701'  // Your repository URL
+        BRANCH = 'main'  // Specify your branch (e.g., 'main' or 'master')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from the specified GitHub repository and branch
+                git branch: "${BRANCH}", url: "${REPO}"
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build the Docker image using the Dockerfile in your repository
+                    sh 'docker build -t $DOCKER_IMAGE:$TAG .'
+                }
+            }
+        }
+
+        stage('Run Backend Tests') {
+            steps {
+                script {
+                    // Run backend tests using the Django framework
+                    // Assumes you have Django tests set up
+                    sh 'docker run --rm $DOCKER_IMAGE:$TAG python manage.py test'
+                }
+            }
+        }
+
+        stage('Run Frontend Tests') {
+            steps {
+                script {
+                    // Run frontend tests using the Next.js testing framework (e.g., Jest)
+                    // Assumes you have frontend tests configured
+                    sh 'docker run --rm $DOCKER_IMAGE:$TAG npm run test --prefix /app/frontend'
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    // Log in to Docker registry and push the built Docker image
+                    // Replace DOCKER_USERNAME and DOCKER_PASSWORD with your credentials
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                    sh 'docker push $DOCKER_IMAGE:$TAG'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // You can customize the deployment step (e.g., using Kubernetes, AWS, etc.)
+                    // This example assumes you're deploying with Kubernetes
+                    // Replace this with your actual deployment steps
+                    sh 'kubectl apply -f kubernetes/deployment.yaml'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            // Clean up unused Docker images and containers
+            sh 'docker system prune -f'
+        }
+    }
+}
