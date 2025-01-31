@@ -1,0 +1,4 @@
+Django==4.2
+djangorestframework==3.14.0   # If you are using Django REST Framework
+beautifulsoup4==4.12.2         # For web scraping
+requests==2.31.0               # For making HTTP requests
