@@ -1,10 +1,10 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE = 'yourdockerusername/django-nextjs-app'  // Replace with your Docker Hub username
+        DOCKER_IMAGE = 'jumaste/django-nextjs-app'  // Replace with your Docker Hub username
         REGISTRY = 'docker.io'
         TAG = "${env.BUILD_ID}"
-        REPO = 'https://github.com/Emmanuel10701'  // Your repository URL
+        REPO = 'https://github.com/Emmanuel10701/Django_NextJs_Scraping_Application'  // Your repository URL
         BRANCH = 'main'  // Specify your branch (e.g., 'main' or 'master')
     }
     stages {
