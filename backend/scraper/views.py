@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 import requests
 from bs4 import BeautifulSoup
+from .models import Product  # Import your model
 
 def scrape_data():
     url = "https://example.com"  # Replace with the real e-commerce store URL
@@ -17,6 +18,12 @@ def scrape_data():
             price = item.select_one(".product-price").text.strip()
             image = item.select_one("img")["src"]
             link = item.select_one("a")["href"]
+
+            # Save to the database
+            product, created = Product.objects.get_or_create(
+                title=title,
+                defaults={"price": price, "image": image, "link": link}
+            )
 
             products.append({
                 "title": title,
