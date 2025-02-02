@@ -16,7 +16,7 @@ RUN npm run build
 FROM python:3.10-slim as backend
 
 # Set the working directory for backend
-WORKDIR /app/backend
+WORKDIR /backend/backend
 
 # Install Python dependencies
 COPY backend/requirements.txt ./
