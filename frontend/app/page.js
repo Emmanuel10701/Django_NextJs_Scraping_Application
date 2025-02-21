@@ -1,9 +1,13 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     axios
@@ -14,35 +18,50 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setError(true);
         setLoading(false);
       });
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-50 p-6">
       <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
         🛍️ E-Commerce Products
       </h1>
-      
+
+      {error && (
+        <p className="text-red-500 text-center">
+          ⚠️ Failed to load products. Please try again later.
+        </p>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {loading
-          ? Array(8).fill(0).map((_, index) => (
-              <div key={index} className="animate-pulse bg-white shadow-md rounded-lg p-4">
-                <div className="w-full h-40 bg-gray-300 rounded-md"></div>
-                <div className="h-4 bg-gray-300 rounded w-3/4 my-3"></div>
-                <div className="h-3 bg-gray-300 rounded w-1/2"></div>
-                <div className="h-10 bg-gray-300 rounded w-full mt-4"></div>
-              </div>
-            ))
+          ? Array(8)
+              .fill(0)
+              .map((_, index) => (
+                <div
+                  key={index}
+                  className="animate-pulse bg-white shadow-md rounded-lg p-4"
+                >
+                  <div className="w-full h-40 bg-gray-300 rounded-md"></div>
+                  <div className="h-4 bg-gray-300 rounded w-3/4 my-3"></div>
+                  <div className="h-3 bg-gray-300 rounded w-1/2"></div>
+                  <div className="h-10 bg-gray-300 rounded w-full mt-4"></div>
+                </div>
+              ))
           : products.map((product, index) => (
               <div
                 key={index}
                 className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition duration-300"
               >
-                <img
+                <Image
                   src={product.image || "https://via.placeholder.com/300"}
                   alt={product.title}
+                  width={300}
+                  height={200}
                   className="w-full h-48 object-cover"
+                  loading="lazy"
                 />
                 <div className="p-4">
                   <h2 className="text-lg font-semibold text-gray-900">
