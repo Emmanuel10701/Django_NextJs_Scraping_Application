@@ -1,4 +1,4 @@
-import { NextSeo } from "next-seo";
+"use client"
 import { FaPen, FaTrashAlt, FaPlusCircle, FaClipboardList } from "react-icons/fa"; // Importing icons
 import { motion } from "framer-motion"; // Importing Framer Motion
 import { useRouter } from 'next/navigation';
@@ -9,10 +9,6 @@ const About = () => {
 
   return (
     <>
-      <NextSeo
-        title="About"
-        description="Learn more about how this application allows you to create and manage posts."
-      />
       <div className="bg-gradient-to-r from-blue-50 to-blue-100 py-16">
         <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-24">
           <motion.div
