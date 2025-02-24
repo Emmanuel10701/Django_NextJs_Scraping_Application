@@ -22,7 +22,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta
           name="viewport"
@@ -30,11 +30,11 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased transition-all duration-300 bg-white text-gray-900 dark:bg-gray-900 dark:text-white`}
       >
         <ThemeProvider>
           <Navbar />
-          {children}
+          <main>{children}</main>
           <Footer />
         </ThemeProvider>
       </body>
