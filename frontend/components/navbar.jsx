@@ -5,23 +5,26 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import { useTheme } from "../app/context/themeContext";
 
 const NavBar = () => {
-  const pathname = usePathname(); 
+  const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <nav className="w-full p-4 bg-gray-900 shadow-lg border-b border-gray-700 fixed top-0 left-0 right-0 z-50">
+    <nav
+      className={`w-full p-4 shadow-lg border-b fixed top-0 left-0 right-0 z-50 transition-all duration-300 
+      ${theme === "dark" ? "bg-gray-900 text-white border-gray-700" : "bg-white text-gray-900 border-gray-300"}`}
+    >
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
           <h1 className="text-xl">
             <Link href="/">
-              <span className="text-blue-400 font-bold uppercase">Web Scraper</span>
+              <span className="font-bold uppercase">Web Scraper</span>
             </Link>
           </h1>
           <div className="flex items-center space-x-6">
             <Link href="/">
               <span
                 className={`hover:text-blue-400 text-sm font-bold px-3 transition duration-200 uppercase ${
-                  pathname === "/" ? "text-blue-400" : "text-gray-400"
+                  pathname === "/" ? "text-blue-400" : ""
                 }`}
               >
                 Home
@@ -30,7 +33,7 @@ const NavBar = () => {
             <Link href="/about">
               <span
                 className={`hover:text-blue-400 text-sm font-bold px-3 transition duration-200 uppercase ${
-                  pathname === "/about" ? "text-blue-400" : "text-gray-400"
+                  pathname === "/about" ? "text-blue-400" : ""
                 }`}
               >
                 About Us
@@ -38,7 +41,7 @@ const NavBar = () => {
             </Link>
             <button
               onClick={toggleTheme}
-              className="text-gray-400 hover:text-blue-400 transition duration-200"
+              className="transition duration-200"
               aria-label="Toggle Theme"
             >
               {theme === "dark" ? <FaSun size={20} /> : <FaMoon size={20} />}
