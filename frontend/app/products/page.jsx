@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios'; // Import Axios
-import { FaTrash, FaEye, FaPlus } from 'react-icons/fa'; // React Icons
+import {  FaEye, FaPlus } from 'react-icons/fa'; // React Icons
 import { motion } from 'framer-motion'; // Framer Motion
 
 const Posts = () => {
