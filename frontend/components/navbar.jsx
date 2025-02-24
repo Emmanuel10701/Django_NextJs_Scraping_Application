@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useTheme } from "../app/context/themeContext";
 
 const NavBar = () => {
-  const router = useRouter();
+  const pathname = usePathname(); 
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -21,7 +21,7 @@ const NavBar = () => {
             <Link href="/">
               <span
                 className={`hover:text-blue-400 text-sm font-bold px-3 transition duration-200 uppercase ${
-                  router.pathname === "/" ? "text-blue-400" : "text-gray-400"
+                  pathname === "/" ? "text-blue-400" : "text-gray-400"
                 }`}
               >
                 Home
@@ -30,7 +30,7 @@ const NavBar = () => {
             <Link href="/about">
               <span
                 className={`hover:text-blue-400 text-sm font-bold px-3 transition duration-200 uppercase ${
-                  router.pathname === "/about" ? "text-blue-400" : "text-gray-400"
+                  pathname === "/about" ? "text-blue-400" : "text-gray-400"
                 }`}
               >
                 About Us
