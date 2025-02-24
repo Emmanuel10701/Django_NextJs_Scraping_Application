@@ -30,7 +30,7 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link href="https://github.com/xSerioUsx78/scraper" target="_blank" className="hover:text-blue-400 transition duration-200 flex items-center">
+              <Link href="https://github.com/Emmanuel10701/Django_NextJs_Scraping_Application" target="_blank" className="hover:text-blue-400 transition duration-200 flex items-center">
                 <FaGithub className="mr-2" /> GitHub Repository
               </Link>
             </li>
@@ -41,7 +41,7 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-bold text-blue-400">Support & Contact</h3>
           <p className="text-gray-400 mt-2">Need help or have suggestions?</p>
-          <a href="mailto:emmanuel@example.com" className="mt-2 inline-block hover:text-blue-400 transition duration-200 flex items-center justify-center md:justify-start">
+          <a href="mailto:emmanuel@example.com" className="mt-2  hover:text-blue-400 transition duration-200 flex items-center justify-center md:justify-start">
             <FaEnvelope className="mr-2" /> Contact Support
           </a>
         </div>
