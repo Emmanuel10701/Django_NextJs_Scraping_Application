@@ -7,6 +7,7 @@ import { useSession, signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaDatabase, FaSpider, FaCode, FaSearch } from "react-icons/fa";
 import DataDisplay from "../components/hero";
+import { useTheme } from "../app/context/themeContext"; // Import useTheme hook
 
 const features = [
   {
@@ -33,14 +34,25 @@ const features = [
 
 export default function Home({ data }) {
   const [showModal, setShowModal] = useState(false);
+  const { theme, toggleTheme } = useTheme(); // Access theme from context
 
   return (
-    <div className="font-poppins">
-      <header className="relative text-center py-16 bg-blue-50">
+    <div
+      className={`font-poppins transition-all duration-300 ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
+      }`}
+    >
+      <header
+        className={`relative text-center py-16 transition-all duration-300 ${
+          theme === "dark" ? "bg-gray-800" : "bg-blue-50"
+        }`}
+      >
         <div className="flex flex-col-reverse md:flex-row items-center mx-4 md:mx-40 mt-10">
           <div className="md:w-1/2">
             <motion.h1
-              className="mb-4 text-5xl font-bold text-gray-900"
+              className={`mb-4 text-5xl font-bold transition-all duration-300 ${
+                theme === "dark" ? "text-white" : "text-gray-900"
+              }`}
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
@@ -48,7 +60,9 @@ export default function Home({ data }) {
               Master <span className="text-blue-600">Web Scraping</span>
             </motion.h1>
             <motion.p
-              className="mb-8 max-w-xl mx-auto text-gray-500 leading-relaxed"
+              className={`mb-8 max-w-xl mx-auto leading-relaxed transition-all duration-300 ${
+                theme === "dark" ? "text-gray-400" : "text-gray-500"
+              }`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.7 }}
@@ -79,39 +93,74 @@ export default function Home({ data }) {
           </div>
         </div>
       </header>
-      
-      <section id="features" className="py-16 px-4 mx-4 md:px-12 bg-gray-100">
+
+      <section
+        id="features"
+        className={`py-16 px-4 mx-4 md:px-12 transition-all duration-300 ${
+          theme === "dark" ? "bg-gray-800" : "bg-gray-100"
+        }`}
+      >
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-500">
+          <h2
+            className={`text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-500 transition-all duration-300 ${
+              theme === "dark" ? "text-white" : "text-gray-900"
+            }`}
+          >
             Why Choose <span className="text-green-600">Our Scraper</span>?
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="p-6 bg-white shadow-md rounded-lg transition-transform duration-500 transform hover:scale-105 flex flex-col items-center"
+                className={`p-6 bg-white shadow-md rounded-lg transition-transform duration-500 transform hover:scale-105 flex flex-col items-center ${
+                  theme === "dark" ? "bg-gray-700" : "bg-white"
+                }`}
               >
                 <span className="flex items-center justify-center mb-4 p-4 rounded-full text-white">
                   {feature.icon}
                 </span>
-                <h4 className="mb-2 text-lg font-bold text-gray-900">{feature.title}</h4>
-                <p className="text-gray-500">{feature.description}</p>
+                <h4
+                  className={`mb-2 text-lg font-bold transition-all duration-300 ${
+                    theme === "dark" ? "text-white" : "text-gray-900"
+                  }`}
+                >
+                  {feature.title}
+                </h4>
+                <p
+                  className={`text-gray-500 transition-all duration-300 ${
+                    theme === "dark" ? "text-gray-300" : "text-gray-500"
+                  }`}
+                >
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
-      
+
       <DataDisplay data={data} />
-      
+
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full relative">
             <button className="absolute top-3 right-3 text-gray-600" onClick={() => setShowModal(false)}>
               ✖
             </button>
-            <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">Start Scraping Today!</h1>
-            <p className="text-gray-500 text-center mb-8">Sign in to access powerful scraping tools.</p>
+            <h1
+              className={`text-3xl font-bold text-center mb-6 transition-all duration-300 ${
+                theme === "dark" ? "text-white" : "text-gray-800"
+              }`}
+            >
+              Start Scraping Today!
+            </h1>
+            <p
+              className={`text-center mb-8 transition-all duration-300 ${
+                theme === "dark" ? "text-gray-400" : "text-gray-500"
+              }`}
+            >
+              Sign in to access powerful scraping tools.
+            </p>
             <button
               onClick={() => signIn("google")}
               className="flex items-center justify-center w-full py-3 bg-white border border-gray-300 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-100 transition"
