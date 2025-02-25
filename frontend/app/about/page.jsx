@@ -2,7 +2,7 @@
 import { FaPen, FaTrashAlt, FaPlusCircle, FaClipboardList } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useTheme } from "../app/context/themeContext"; // Import useTheme to access the theme
+import { useTheme } from "../../app/context/themeContext"; // Import useTheme to access the theme
 
 const About = () => {
   const { theme } = useTheme(); // Access the current theme
