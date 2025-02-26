@@ -108,34 +108,26 @@ export default function Home({ data }) {
           >
             Why Choose <span className="text-green-600">Our Scraper</span>?
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className={`p-6 bg-white shadow-md rounded-lg transition-transform duration-500 transform hover:scale-105 flex flex-col items-center ${
-                  theme === "dark" ? "bg-gray-700" : "bg-white"
-                }`}
-              >
-                <span className="flex items-center justify-center mb-4 p-4 rounded-full text-white">
-                  {feature.icon}
-                </span>
-                <h4
-                  className={`mb-2 text-lg font-bold transition-all duration-300 ${
-                    theme === "dark" ? "text-white" : "text-gray-900"
-                  }`}
-                >
-                  {feature.title}
-                </h4>
-                <p
-                  className={`text-gray-500 transition-all duration-300 ${
-                    theme === "dark" ? "text-gray-300" : "text-gray-500"
-                  }`}
-                >
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  {features.map((feature, index) => (
+    <div
+      key={index}
+      className={`p-6 shadow-md rounded-lg transition-transform duration-500 transform hover:scale-105 flex flex-col items-center 
+        ${theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-gray-900"}`}
+    >
+      <span className={`flex items-center justify-center mb-4 p-4 rounded-full 
+        ${theme === "dark" ? "bg-gray-600 text-blue-400" : "bg-blue-100 text-blue-500"}`}>
+        {feature.icon}
+      </span>
+      <h4 className="mb-2 text-lg font-bold">{feature.title}</h4>
+      <p className={`${theme === "dark" ? "text-gray-300" : "text-gray-500"}`}>
+        {feature.description}
+      </p>
+    </div>
+  ))}
+</div>
+
+
         </div>
       </section>
 
@@ -149,7 +141,7 @@ export default function Home({ data }) {
             </button>
             <h1
               className={`text-3xl font-bold text-center mb-6 transition-all duration-300 ${
-                theme === "dark" ? "text-white" : "text-gray-800"
+                theme === "dark" ? "text-slate-500" : "text-gray-800"
               }`}
             >
               Start Scraping Today!

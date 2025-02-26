@@ -46,7 +46,7 @@ const About = () => {
               initial={{ opacity: 0, x: -100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className={`bg-white shadow-xl rounded-lg p-6 hover:bg-blue-50 transition-all ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}
+              className={`rounded-lg p-6 hover:bg-blue-50 transition-all ${theme === "dark" ? "bg-gray-800 text-white opacity-90" : "bg-white"}`}
             >
               <div className="flex items-center mb-4">
                 <FaPlusCircle className="text-blue-600 text-2xl mr-4" />
@@ -62,7 +62,7 @@ const About = () => {
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className={`bg-white shadow-xl rounded-lg p-6 hover:bg-blue-50 transition-all ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}
+              className={`rounded-lg p-6 hover:bg-blue-50 transition-all ${theme === "dark" ? "bg-gray-800 text-white opacity-90" : "bg-white"}`}
             >
               <div className="flex items-center mb-4">
                 <FaPen className="text-yellow-600 text-2xl mr-4" />
@@ -81,7 +81,7 @@ const About = () => {
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className={`bg-white shadow-xl rounded-lg p-6 hover:bg-blue-50 transition-all ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}
+              className={`rounded-lg p-6 hover:bg-blue-50 transition-all ${theme === "dark" ? "bg-gray-800 text-white opacity-90" : "bg-white"}`}
             >
               <div className="flex items-center mb-4">
                 <FaTrashAlt className="text-red-600 text-2xl mr-4" />
@@ -97,7 +97,7 @@ const About = () => {
               initial={{ opacity: 0, y: -100 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className={`bg-white shadow-xl rounded-lg p-6 hover:bg-blue-50 transition-all ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}
+              className={`rounded-lg p-6 hover:bg-blue-50 transition-all ${theme === "dark" ? "bg-gray-800 text-white opacity-90" : "bg-white"}`}
             >
               <div className="flex items-center mb-4">
                 <FaClipboardList className="text-green-600 text-2xl mr-4" />
