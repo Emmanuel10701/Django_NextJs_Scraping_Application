@@ -2,8 +2,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios'; // Import Axios
-import { FaEye, FaPlus } from 'react-icons/fa'; // React Icons
+import { FaEye } from 'react-icons/fa'; // React Icons
 import { motion } from 'framer-motion'; // Framer Motion
+import CircularProgress from '@mui/material/CircularProgress'; // Material UI CircularProgress
 
 const WebScraper = () => {
   const [scrapedData, setScrapedData] = useState([]);
@@ -115,8 +116,9 @@ const WebScraper = () => {
 
       {/* Display Loading Indicator */}
       {isLoading && (
-        <div className="fixed top-4 right-4 bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md">
-          Loading data...
+        <div className="fixed top-4 right-4 bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md flex items-center space-x-2">
+          <CircularProgress color="inherit" />
+          <span>Loading data...</span>
         </div>
       )}
     </>
