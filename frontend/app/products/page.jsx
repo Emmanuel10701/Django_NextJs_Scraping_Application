@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios'; // Import Axios
@@ -7,16 +7,18 @@ import { motion } from 'framer-motion'; // Framer Motion
 import CircularProgress from '@mui/material/CircularProgress'; // Material UI CircularProgress
 
 const WebScraper = () => {
-  const [scrapedData, setScrapedData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [scrapedData, setScrapedData] = useState([]); // State to store scraped data
+  const [isLoading, setIsLoading] = useState(false); // Loading state for data fetch
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false); // Success alert state
+  const [currentPage, setCurrentPage] = useState(1); // State to manage pagination
+  const [viewedData, setViewedData] = useState(null); // State for the specific item that was viewed
+  const [isViewing, setIsViewing] = useState(false); // State to handle the loading state when viewing an item
+
   const dataPerPage = 10;
+  const API_URL = "http://127.0.0.1:8000/scraper/api/data/"; // Your API URL for scraping service or server
 
-  const API_URL = "http://127.0.0.1:8000/scraper/api/data/" // Your API URL for scraping service or server
-
+  // Fetch the scraped data when the component mounts
   useEffect(() => {
-    // Fetch scraped data using Axios from your scraping API or server
     setIsLoading(true);
     axios
       .get(API_URL)
@@ -39,6 +41,21 @@ const WebScraper = () => {
 
   const handlePrevPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
   const handleNextPage = () => setCurrentPage(prev => Math.min(prev + 1, Math.ceil(scrapedData.length / dataPerPage)));
+
+  // Handle the 'View' button click and fetch data dynamically
+  const handleViewClick = (dataId) => {
+    setIsViewing(true); // Set viewing to true to show the loading spinner
+    axios
+      .get(`${API_URL}${dataId}/`) // Fetch details of the specific item
+      .then((response) => {
+        setViewedData(response.data); // Set the fetched data to the state
+        setIsViewing(false); // Reset loading state
+      })
+      .catch((err) => {
+        alert('Error fetching detailed data');
+        setIsViewing(false);
+      });
+  };
 
   return (
     <>
@@ -70,7 +87,7 @@ const WebScraper = () => {
             </p>
             <div className="flex justify-between items-center">
               <motion.button
-                onClick={() => alert(`Viewing more details for ${dataItem.title}`)}
+                onClick={() => handleViewClick(dataItem.id)} // Trigger fetch on button click
                 className="px-4 py-2 bg-transparent border border-blue-500 rounded-md shadow-sm hover:shadow-md transition-all"
               >
                 View <FaEye className="inline-block ml-2" />
@@ -79,6 +96,20 @@ const WebScraper = () => {
           </motion.div>
         ))}
       </div>
+
+      {/* Display the detailed data when a user clicks on 'View' */}
+      {isViewing && (
+        <div className="fixed top-4 right-4 bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md flex items-center space-x-2">
+          <CircularProgress color="inherit" />
+          <span>Loading details...</span>
+        </div>
+      )}
+      {viewedData && (
+        <div className="my-12 max-w-2xl mx-auto bg-white p-8 shadow-lg rounded-lg">
+          <h3 className="text-3xl font-bold text-blue-600">{viewedData.title}</h3>
+          <p className="text-lg mt-4">{viewedData.content}</p>
+        </div>
+      )}
 
       {/* Pagination */}
       <div className="flex justify-center mt-8">
