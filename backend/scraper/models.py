@@ -1,10 +1,11 @@
 from django.db import models
 
 class Product(models.Model):
-    title = models.CharField(max_length=255)
-    price = models.CharField(max_length=50)  # Store as string to keep formatting
-    image = models.URLField()
-    link = models.URLField()
+    name = models.CharField(max_length=255)
+    image = models.URLField()  # Assuming the image is stored as a URL
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    date_posted = models.DateField()
+    quantity = models.IntegerField()
 
     def __str__(self):
-        return self.title
+        return self.name
