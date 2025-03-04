@@ -1,4 +1,14 @@
-Django==4.2
-djangorestframework==3.14.0   # If you are using Django REST Framework
-beautifulsoup4==4.12.2         # For web scraping
-requests==2.31.0               # For making HTTP requests
+asgiref==3.8.1
+beautifulsoup4==4.13.3
+certifi==2025.1.31
+charset-normalizer==3.4.1
+Django==5.1.6
+djangorestframework==3.15.2
+idna==3.10
+pillow==11.1.0
+requests==2.32.3
+soupsieve==2.6
+sqlparse==0.5.3
+typing_extensions==4.12.2
+tzdata==2025.1
+urllib3==2.3.0
