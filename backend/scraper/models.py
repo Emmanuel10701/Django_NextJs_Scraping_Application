@@ -16,7 +16,7 @@ class Product(models.Model):
     image = models.URLField()  # Image from an external source
     price = models.DecimalField(max_digits=10, decimal_places=2)
     date_posted = models.DateTimeField(auto_now_add=True)
-    rating = models.OneToOneField(Rating, on_delete=models.CASCADE, related_name="product")
+    rating = models.OneToOneField(Rating, on_delete=models.CASCADE, related_name="product", null=True, blank=True)  # Made optional
 
     def __str__(self):
         return self.title
