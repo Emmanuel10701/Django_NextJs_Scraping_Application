@@ -11,11 +11,11 @@ class Rating(models.Model):
 class Product(models.Model):
     id = models.AutoField(primary_key=True)  # Ensures ID matches expected format
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(default="No description available")  # Added default value
     category = models.CharField(max_length=100, default="Uncategorized")  # Added default value
     image = models.URLField()  # Image from an external source
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    date_posted = models.DateTimeField(default=timezone.now)
+    date_posted = models.DateTimeField(auto_now_add=True)
     rating = models.OneToOneField(Rating, on_delete=models.CASCADE, related_name="product")
 
     def __str__(self):
