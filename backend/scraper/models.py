@@ -1,16 +1,25 @@
 from django.db import models
 from django.utils import timezone
 
-class Product(models.Model):
-    name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='products/', blank=True, null=True)  # Allows optional images
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    date_posted = models.DateTimeField(default=timezone.now)  # Default added to prevent migration errors
-    quantity = models.PositiveIntegerField(default=1)  # Default value added
-    link = models.URLField(blank=True, null=True)  # Fixes the admin panel issue
+class Rating(models.Model):
+    rate = models.FloatField()
+    count = models.PositiveIntegerField()
 
     def __str__(self):
-        return self.name
+        return f"Rating: {self.rate} ({self.count} reviews)"
+
+class Product(models.Model):
+    id = models.AutoField(primary_key=True)  # Ensures ID matches expected format
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    category = models.CharField(max_length=100)
+    image = models.URLField()  # Image from an external source
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    date_posted = models.DateTimeField(default=timezone.now)
+    rating = models.OneToOneField(Rating, on_delete=models.CASCADE, related_name="product")
+
+    def __str__(self):
+        return self.title
 
 class User(models.Model):
     name = models.CharField(max_length=255)

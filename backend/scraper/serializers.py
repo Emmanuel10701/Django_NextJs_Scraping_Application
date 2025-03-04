@@ -1,10 +1,17 @@
 from rest_framework import serializers
-from .models import Product, Job
+from .models import Product, Job, Rating
+
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ["rate", "count"]
 
 class ProductSerializer(serializers.ModelSerializer):
+    rating = RatingSerializer()  # Include rating details in the response
+
     class Meta:
         model = Product
-        fields = ["id", "name", "image", "price", "date_posted"]
+        fields = ["id", "title", "description", "category", "image", "price", "date_posted", "rating"]
 
 class JobSerializer(serializers.ModelSerializer):
     class Meta:

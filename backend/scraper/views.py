@@ -1,62 +1,77 @@
-from django.http import JsonResponse
-from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+from rest_framework.response import Response
 import requests
 from bs4 import BeautifulSoup
-from .models import Product, Job
+from .models import Product, Job, Rating
 from .serializers import ProductSerializer, JobSerializer
 
+
 def scrape_products():
-    url = "https://example.com/products"  # Replace with actual product URL
+    url = "https://fakestoreapi.com/products"  # Replace with actual product URL
     headers = {"User-Agent": "Mozilla/5.0"}
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-        soup = BeautifulSoup(response.text, "html.parser")
+        products_data = response.json()
         products = []
 
-        for item in soup.select(".product-card"):  # Adjust selector based on the website
-            name = item.select_one(".product-title").text.strip()
-            price = item.select_one(".product-price").text.strip()
-            image = item.select_one("img")["src"]
-            link = item.select_one("a")["href"]
+        for item in products_data:
+            title = item["title"]
+            description = item.get("description", "")
+            category = item.get("category", "")
+            image = item.get("image", "")
+            price = item.get("price", 0.0)
+            rating_data = item.get("rating", {"rate": 0.0, "count": 0})
 
-            # Save to database
+            # Save rating first
+            rating, _ = Rating.objects.get_or_create(rate=rating_data["rate"], count=rating_data["count"])
+
+            # Save product to the database
             product, created = Product.objects.get_or_create(
-                name=name,
-                defaults={"price": price, "image": image}
+                title=title,
+                defaults={
+                    "description": description,
+                    "category": category,
+                    "image": image,
+                    "price": price,
+                    "rating": rating,
+                }
             )
 
             products.append({
-                "name": name,
-                "price": price,
+                "title": title,
+                "description": description,
+                "category": category,
                 "image": image,
-                "link": link,
+                "price": price,
+                "rating": rating_data,
             })
+
         return products
 
     return []
 
+
 def scrape_jobs():
-    url = "https://example.com/jobs"  # Replace with actual job board URL
+    url = "https://remoteok.io/api"  # Replace with actual job board URL
     headers = {"User-Agent": "Mozilla/5.0"}
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-        soup = BeautifulSoup(response.text, "html.parser")
+        jobs_data = response.json()
         jobs = []
 
-        for item in soup.select(".job-listing"):  # Adjust selector based on the website
-            title = item.select_one(".job-title").text.strip()
-            company = item.select_one(".company-name").text.strip()
-            category = item.select_one(".job-category").text.strip()
-            date_posted = item.select_one(".date-posted").text.strip()
-            payment = item.select_one(".salary").text.strip()
-            job_type = item.select_one(".job-type").text.strip()
-            location_type = item.select_one(".location-type").text.strip()
-            work_hours = item.select_one(".work-hours").text.strip()
-            num_employees = item.select_one(".num-employees").text.strip()
+        for item in jobs_data:
+            title = item.get("title", "")
+            company = item.get("company", "")
+            category = item.get("category", "")
+            payment = item.get("salary", 0.0)
+            job_type = item.get("job_type", "full_time")
+            location_type = item.get("location", "remote")
+            work_hours = item.get("work_hours", "")
+            num_employees = item.get("num_employees", 1)
 
-            # Save to database
+            # Save job to database
             job, created = Job.objects.get_or_create(
                 title=title,
                 company=company,
@@ -74,31 +89,35 @@ def scrape_jobs():
                 "title": title,
                 "company": company,
                 "category": category,
-                "date_posted": date_posted,
                 "payment": payment,
                 "job_type": job_type,
                 "location_type": location_type,
                 "work_hours": work_hours,
                 "num_employees": num_employees,
             })
+
         return jobs
 
     return []
 
-@api_view(["GET"])
-def get_scraped_data(request):
-    products = scrape_products()
-    jobs = scrape_jobs()
-    return JsonResponse({"products": products, "jobs": jobs}, safe=False)
 
-@api_view(["GET"])
-def get_products(request):
-    products = Product.objects.all()
-    serializer = ProductSerializer(products, many=True)
-    return JsonResponse(serializer.data, safe=False)
+# **Class-Based Views (CBVs)**
+class ScrapedDataView(APIView):
+    def get(self, request):
+        products = scrape_products()
+        jobs = scrape_jobs()
+        return Response({"products": products, "jobs": jobs})
 
-@api_view(["GET"])
-def get_jobs(request):
-    jobs = Job.objects.all()
-    serializer = JobSerializer(jobs, many=True)
-    return JsonResponse(serializer.data, safe=False)
+
+class ProductListView(APIView):
+    def get(self, request):
+        products = Product.objects.all()
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
+
+
+class JobListView(APIView):
+    def get(self, request):
+        jobs = Job.objects.all()
+        serializer = JobSerializer(jobs, many=True)
+        return Response(serializer.data)
