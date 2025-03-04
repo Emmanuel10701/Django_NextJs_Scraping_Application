@@ -12,7 +12,7 @@ class Product(models.Model):
     id = models.AutoField(primary_key=True)  # Ensures ID matches expected format
     title = models.CharField(max_length=255)
     description = models.TextField()
-    category = models.CharField(max_length=100)
+    category = models.CharField(max_length=100, default="Uncategorized")  # Added default value
     image = models.URLField()  # Image from an external source
     price = models.DecimalField(max_digits=10, decimal_places=2)
     date_posted = models.DateTimeField(default=timezone.now)
