@@ -13,7 +13,7 @@ class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(default="No description available")  # Added default value
     category = models.CharField(max_length=100, default="Uncategorized")  # Added default value
-    image = models.URLField()  # Image from an external source
+    image = models.URLField(null=True, blank=True)  # Made optional
     price = models.DecimalField(max_digits=10, decimal_places=2)
     date_posted = models.DateTimeField(auto_now_add=True)
     rating = models.OneToOneField(Rating, on_delete=models.CASCADE, related_name="product", null=True, blank=True)  # Made optional
