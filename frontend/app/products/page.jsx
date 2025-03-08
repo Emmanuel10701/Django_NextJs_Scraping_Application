@@ -15,7 +15,7 @@ const WebScraper = () => {
   const [isViewing, setIsViewing] = useState(false); // State to handle the loading state when viewing an item
 
   const dataPerPage = 10;
-  const API_URL = "http://127.0.0.1:8000/scraper/api/data/"; // Your API URL for scraping service or server
+  const API_URL = "http://127.0.0.1:8000/api/get-scraped-data/"; // Your API URL for scraping service or server
 
   // Fetch the scraped data when the component mounts
   useEffect(() => {

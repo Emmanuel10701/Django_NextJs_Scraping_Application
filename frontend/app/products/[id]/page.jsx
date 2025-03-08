@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { CircularProgress } from '@mui/material';
 
-const BASE_URL = 'http://127.0.0.1:8000/api/data/'; // Replace with your dynamic data API URL
+const BASE_URL = 'http://127.0.0.1:8000/api/get-scraped-data/'; // Replace with your dynamic data API URL
 
 const ItemDetails = () => {
   const router = useRouter();
